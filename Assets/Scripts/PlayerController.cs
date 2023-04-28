@@ -50,7 +50,14 @@ public class PlayerController : MonoBehaviour
     void FixedUpdate() // called before preforming any physics calculations
     {
         isGrounded = Physics.CheckSphere(transform.position, -playerCurrentHeight * 1.1f, groundLayer);
-        Vector3 moveDirection = new Vector3(orienation.forward.x, 0, orienation.forward.z) * movementZ + orienation.right * movementX;
+        Vector3 forward = new Vector3(orienation.forward.x, 0, orienation.forward.z);
+
+        if (forward.x == 0)
+            forward.Set(0, 0, 0);
+        else
+            forward = ((forward / forward.magnitude) * orienation.forward.magnitude);
+
+        Vector3 moveDirection = forward * movementZ + orienation.right * movementX;
 
         if (isGrounded)
         {
