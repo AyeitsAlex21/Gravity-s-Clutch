@@ -36,44 +36,37 @@ public class PlayerController : MonoBehaviour
         InputActionMap actionMap = GetComponent<PlayerInput>().actions.FindActionMap("Player");
 
         jumpAction = actionMap.FindAction("Jump");
-        jumpAction.performed += OnJumpPerformed;
     }
 
     // Update is called once per frame
     void Update() // update each and every single frame
     {
+        if (jumpAction.WasPressedThisFrame() && isGrounded)
+        {
+            jumpTriggered = true;
+        }
     }
 
     void FixedUpdate() // called before preforming any physics calculations
     {
-        isGrounded = Physics.CheckSphere(transform.position, -playerCurrentHeight, groundLayer);
-        Vector3 moveDirection = orienation.forward * movementZ + orienation.right * movementX;
+        isGrounded = Physics.CheckSphere(transform.position, -playerCurrentHeight * 1.1f, groundLayer);
+        Vector3 moveDirection = new Vector3(orienation.forward.x, 0, orienation.forward.z) * movementZ + orienation.right * movementX;
 
         if (isGrounded)
         {
             rb.drag = drag;
             rb.AddForce(moveDirection * speed * 10);
-            SpeedControl();
         }
         else
         {
             rb.drag = 0;
-
             rb.AddForce(moveDirection * speed * 10 * airMultiplier);
-
-            /*
-            float dot = Vector3.Dot(new Vector3(rb.velocity.x, 0, rb.velocity.z).normalized, moveDirection.normalized);
-            float angle = Mathf.Acos(dot) * Mathf.Rad2Deg;
-
-            if(angle > 90)
-            {
-                rb.AddForce
-            }
-            */
         }
+        SpeedControl();
 
         if (jumpTriggered)
         {
+
             rb.velocity = new Vector3(rb.velocity.x, 0, rb.velocity.z);
             rb.AddForce(new Vector3(0, jumpForce, 0), ForceMode.Impulse);
             jumpTriggered = !jumpTriggered;
@@ -85,12 +78,6 @@ public class PlayerController : MonoBehaviour
         Vector2 movementVector = movementValue.Get<Vector2>();
         movementX = movementVector.x;
         movementZ = movementVector.y;
-    }
-
-    private void OnJumpPerformed(InputAction.CallbackContext context)
-    {
-        if (isGrounded)
-            jumpTriggered = true;
     }
 
     private void SpeedControl()
