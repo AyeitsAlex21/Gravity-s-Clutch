@@ -42,6 +42,7 @@ GameObject:
   - component: {fileID: 8058933666046324575}
   - component: {fileID: 1858140579}
   - component: {fileID: 1858140580}
+  - component: {fileID: 3015492018105037478}
   - component: {fileID: 1858140581}
   m_Layer: 0
   m_Name: Player
@@ -118,6 +119,20 @@ MonoBehaviour:
   groundLayer:
     serializedVersion: 2
     m_Bits: 256
+--- !u!114 &3015492018105037478
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3752946523801288788}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7c8b1849e925dc7448709a812c34d5e2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playerOrientation: {fileID: 5337703995198036440}
+  CurrentRotation: {x: 0, y: 0, z: 0, w: 0}
 --- !u!54 &1858140581
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -129,7 +144,7 @@ Rigidbody:
   m_Mass: 1
   m_Drag: 0
   m_AngularDrag: 0.05
-  m_UseGravity: 1
+  m_UseGravity: 0
   m_IsKinematic: 0
   m_Interpolate: 1
   m_Constraints: 112

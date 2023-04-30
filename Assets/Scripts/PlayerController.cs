@@ -11,6 +11,8 @@ public class PlayerController : MonoBehaviour
     public float airMultiplier;
     public LayerMask groundLayer;
 
+    private GravitySwitcher gravSwitcher;
+    private Quaternion currentOrientation;
     private Rigidbody rb;
     private Transform orienation;
     private InputAction jumpAction;
@@ -21,6 +23,7 @@ public class PlayerController : MonoBehaviour
     private float playerCurrentHeight;
     private bool jumpTriggered = false;
     private bool isGrounded;
+    private Vector3 Gravity = new Vector3(0, -9.81f, 0);
 
     // Start is called before the first frame update
     void Start()
@@ -36,6 +39,9 @@ public class PlayerController : MonoBehaviour
         InputActionMap actionMap = GetComponent<PlayerInput>().actions.FindActionMap("Player");
 
         jumpAction = actionMap.FindAction("Jump");
+
+        gravSwitcher = GetComponent<GravitySwitcher>();
+        currentOrientation = gravSwitcher.CurrentRotation;
     }
 
     // Update is called once per frame
@@ -49,15 +55,16 @@ public class PlayerController : MonoBehaviour
 
     void FixedUpdate() // called before preforming any physics calculations
     {
+        currentOrientation = gravSwitcher.CurrentRotation;
+        rb.AddForce(currentOrientation * Gravity * rb.mass, ForceMode.Force);
+        transform.rotation = currentOrientation;
+
         isGrounded = Physics.CheckSphere(transform.position, -playerCurrentHeight * 1.1f, groundLayer);
-        Vector3 forward = new Vector3(orienation.forward.x, 0, orienation.forward.z);
+        Vector3 forward = new Vector3(orienation.forward.x, orienation.forward.y, orienation.forward.z);
+        forward = ((forward / forward.magnitude) * orienation.forward.magnitude);
 
-        if (forward.x == 0)
-            forward.Set(0, 0, 0);
-        else
-            forward = ((forward / forward.magnitude) * orienation.forward.magnitude);
-
-        Vector3 moveDirection = forward * movementZ + orienation.right * movementX;
+        Vector3 RotatedInput = currentOrientation * new Vector3(movementX, 0, movementZ);
+        Vector3 moveDirection = (forward * movementZ + orienation.right * movementX);
 
         if (isGrounded)
         {
@@ -74,8 +81,8 @@ public class PlayerController : MonoBehaviour
         if (jumpTriggered)
         {
 
-            rb.velocity = new Vector3(rb.velocity.x, 0, rb.velocity.z);
-            rb.AddForce(new Vector3(0, jumpForce, 0), ForceMode.Impulse);
+            rb.velocity = currentOrientation * new Vector3(rb.velocity.x, 0, rb.velocity.z);
+            rb.AddForce(currentOrientation * new Vector3(0, jumpForce, 0), ForceMode.Impulse);
             jumpTriggered = !jumpTriggered;
         }
     }
@@ -85,6 +92,8 @@ public class PlayerController : MonoBehaviour
         Vector2 movementVector = movementValue.Get<Vector2>();
         movementX = movementVector.x;
         movementZ = movementVector.y;
+
+        //Debug.Log(movementX + " " + movementZ);
     }
 
     private void SpeedControl()
