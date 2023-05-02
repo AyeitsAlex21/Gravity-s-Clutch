@@ -16,6 +16,7 @@ public class PlayerController : MonoBehaviour
     private Rigidbody rb;
     private Transform orienation;
     private InputAction jumpAction;
+    private float rbMass;
     private float movementX;
     private float movementZ;
     private float playerStandingHeight;
@@ -35,6 +36,7 @@ public class PlayerController : MonoBehaviour
         playerStandingHeight = transform.localScale.y;
         playerCrouchHeight = playerStandingHeight / 2;
         playerCurrentHeight = playerStandingHeight;
+        rbMass = rb.mass;
 
         InputActionMap actionMap = GetComponent<PlayerInput>().actions.FindActionMap("Player");
 
@@ -56,25 +58,29 @@ public class PlayerController : MonoBehaviour
     void FixedUpdate() // called before preforming any physics calculations
     {
         currentOrientation = gravSwitcher.CurrentRotation;
-        rb.AddForce(currentOrientation * Gravity * rb.mass, ForceMode.Force);
+        rb.AddForce(currentOrientation * (Gravity * rbMass), ForceMode.Force);
         transform.rotation = currentOrientation;
 
         isGrounded = Physics.CheckSphere(transform.position, -playerCurrentHeight * 1.1f, groundLayer);
-        Vector3 forward = new Vector3(orienation.forward.x, orienation.forward.y, orienation.forward.z);
-        forward = ((forward / forward.magnitude) * orienation.forward.magnitude);
+        // Calculate local input vector
+        Vector3 localInput = new Vector3(movementX, 0, movementZ);
 
-        Vector3 RotatedInput = currentOrientation * new Vector3(movementX, 0, movementZ);
-        Vector3 moveDirection = (forward * movementZ + orienation.right * movementX);
+        // Calculate the local forward and right directions based on the player's orientation
+        Vector3 localForward = Vector3.Cross(orienation.right, currentOrientation * Vector3.up);
+        Vector3 localRight = Vector3.Cross(currentOrientation * Vector3.up, localForward);
+
+        // Calculate move direction based on local input and local forward/right directions
+        Vector3 moveDirection = localForward * localInput.z + localRight * localInput.x;
 
         if (isGrounded)
         {
             rb.drag = drag;
-            rb.AddForce(moveDirection * speed * 10);
+            rb.AddForce(moveDirection * (speed * 10));
         }
         else
         {
             rb.drag = 0;
-            rb.AddForce(moveDirection * speed * 10 * airMultiplier);
+            rb.AddForce(moveDirection * (speed * 10 * airMultiplier));
         }
         SpeedControl();
 
@@ -98,14 +104,14 @@ public class PlayerController : MonoBehaviour
 
     private void SpeedControl()
     {
-        Vector3 cur_velocity = new Vector3(rb.velocity.x, 0, rb.velocity.z);
+        Vector3 localVelocity = Quaternion.Inverse(currentOrientation) * rb.velocity;
+        Vector3 localFlatVelocity = new Vector3(localVelocity.x, 0, localVelocity.z);
 
-        //Debug.Log("Before "+cur_velocity.magnitude);
-        if (cur_velocity.magnitude > speed)
+        if (localFlatVelocity.magnitude > speed)
         {
-            cur_velocity = cur_velocity.normalized * speed;
-            rb.velocity = new Vector3(cur_velocity.x, rb.velocity.y, cur_velocity.z);
+            localFlatVelocity = localFlatVelocity.normalized * speed;
+            localVelocity = new Vector3(localFlatVelocity.x, localVelocity.y, localFlatVelocity.z);
+            rb.velocity = currentOrientation * localVelocity;
         }
-        //Debug.Log("After " + cur_velocity.magnitude);
     }
 }

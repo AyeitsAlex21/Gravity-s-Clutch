@@ -9,18 +9,6 @@ public class GravitySwitcher : MonoBehaviour
     public Quaternion CurrentRotation; // THE VARIABLE WE CARE ABOUT AND SHARE ACROSS TO ROTATE EVERYTHING
 
     private InputAction ShiftGravLeft;
-    private InputAction ShiftGravRight;
-    private InputAction ShiftGravForward;
-    private InputAction ShiftGravBackward;
-
-    Quaternion rotate90PosX = Quaternion.Euler(90, 0, 0);  // 90 degrees around the positive X-axis
-    Quaternion rotate90NegX = Quaternion.Euler(-90, 0, 0); // 90 degrees around the negative X-axis
-
-    Quaternion rotate90PosY = Quaternion.Euler(0, 90, 0);  // 90 degrees around the positive Y-axis
-    Quaternion rotate90NegY = Quaternion.Euler(0, -90, 0); // 90 degrees around the negative Y-axis
-
-    Quaternion rotate90PosZ = Quaternion.Euler(0, 0, 90);  // 90 degrees around the positive Z-axis
-    Quaternion rotate90NegZ = Quaternion.Euler(0, 0, -90); // 90 degrees around the negative Z-axis
 
 
     Quaternion leftGrav = Quaternion.Euler(0, 0, -90);  // 90 degrees around the positive X-axis
@@ -42,14 +30,8 @@ public class GravitySwitcher : MonoBehaviour
     {
         InputActionMap actionMap = GetComponent<PlayerInput>().actions.FindActionMap("Player");
         ShiftGravLeft = actionMap.FindAction("ShiftGravLeft");
-        ShiftGravRight = actionMap.FindAction("ShiftGravRight");
-        ShiftGravForward = actionMap.FindAction("ShiftGravForward");
-        ShiftGravBackward = actionMap.FindAction("ShiftGravBackward");
 
         ShiftGravLeft.performed += RotateLeft;
-        //ShiftGravRight.performed += RotateRight;
-        //ShiftGravForward.performed += RotateForward;
-        //ShiftGravBackward.performed += RotateBackward;
 
 
         CurrentRotation = Quaternion.Euler(0, 0, 0);
@@ -58,10 +40,6 @@ public class GravitySwitcher : MonoBehaviour
         rotations = new Quaternion[] { rightGrav, leftGrav, forwardGrav, backwardGrav, ceilingGrav, floorGrav };
     }
 
-    private void FixedUpdate()
-    {
-        //Debug.Log(CurrentRotation);
-    }
 
     void RotateLeft(InputAction.CallbackContext context)
     {
