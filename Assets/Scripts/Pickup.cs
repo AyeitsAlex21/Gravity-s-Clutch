@@ -8,6 +8,7 @@ public class Pickup : MonoBehaviour
     public LayerMask pickupLayer;
     public Transform holdPosition;
     public Transform orientation;
+    public LayerMask ignoreLayers;
 
     private GameObject heldObject;
     private InputAction pickupAction;
@@ -27,15 +28,27 @@ public class Pickup : MonoBehaviour
     }
     void HandlePickup()
     {
-        if (heldObject != null)
+        if (heldObject == null)
         {
             return;
         }
 
-        RaycastHit hit;
-        if (Physics.Raycast(transform.position, transform.forward, out hit, 2f, pickupLayer))
+        Rigidbody heldObjectRigidbody = heldObject.GetComponent<Rigidbody>();
+        heldObjectRigidbody.velocity = Vector3.zero;
+
+        Vector3 playerPosition = transform.position;
+        Vector3 targetPosition = holdPosition.position;
+        Vector3 direction = targetPosition - playerPosition;
+
+        float holdDistance = Vector3.Distance(playerPosition, targetPosition);
+
+        if (Physics.Raycast(playerPosition, direction, out RaycastHit hitInfo, holdDistance, ~ignoreLayers))
         {
-            heldObject = hit.collider.gameObject;
+            heldObject.transform.position = hitInfo.point;
+        }
+        else
+        {
+            heldObject.transform.position = targetPosition;
         }
     }
 

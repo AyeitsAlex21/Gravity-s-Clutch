@@ -5,6 +5,7 @@ using UnityEngine;
 public class ApplyGravity : MonoBehaviour
 {
     public GameObject Player;
+    public bool AffectedByGravSwitch;
 
     private Vector3 Gravity = new Vector3(0, -9.81f, 0);
     private Quaternion CurrentRotation;
@@ -24,11 +25,16 @@ public class ApplyGravity : MonoBehaviour
     {
         if (ifApplyGrav)
         {
-            CurrentRotation = gravitySwitcher.CurrentRotation;
-            rb.AddForce(CurrentRotation * Gravity);
+            if (AffectedByGravSwitch)
+            {
+                CurrentRotation = gravitySwitcher.CurrentRotation;
+                rb.AddForce(CurrentRotation * Gravity);
+            }
+            else
+            {
+                rb.AddForce(Gravity);
+            }
         }
-
-        Debug.Log(ifApplyGrav);
     }
 
     public void TurnGravityOn()
