@@ -23,12 +23,15 @@ public class CamController : MonoBehaviour
         InputActionMap actionMap = GetComponent<PlayerInput>().actions.FindActionMap("Player");
         lookAction = actionMap.FindAction("Look");
         lookAction.performed += OnLookPerformed; // this will call on player moves mouse // has to be named preformed for some reasona
+        lookAction.canceled += OnLookPerformed;
 
         currentOrientation = orientation.parent.GetComponent<GravitySwitcher>().CurrentRotation;
     }
 
     private void OnLookPerformed(InputAction.CallbackContext context)
     {
+        Debug.Log("OnLookPerformed");
+
         currentOrientation = orientation.parent.GetComponent<GravitySwitcher>().CurrentRotation;
 
         Vector2 movementVector = context.ReadValue<Vector2>();
