@@ -28,11 +28,11 @@ public class ApplyGravity : MonoBehaviour
             if (AffectedByGravSwitch)
             {
                 CurrentRotation = gravitySwitcher.CurrentRotation;
-                rb.AddForce(CurrentRotation * Gravity);
+                rb.AddForce(CurrentRotation * Gravity * rb.mass);
             }
             else
             {
-                rb.AddForce(Gravity);
+                rb.AddForce(Gravity * rb.mass);
             }
         }
     }

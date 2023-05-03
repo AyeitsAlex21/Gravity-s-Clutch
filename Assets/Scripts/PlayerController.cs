@@ -49,8 +49,10 @@ public class PlayerController : MonoBehaviour
     // Update is called once per frame
     void Update() // update each and every single frame
     {
+        Debug.Log("Update");
         if (jumpAction.WasPressedThisFrame() && isGrounded)
         {
+            Debug.Log("in jump");
             jumpTriggered = true;
         }
     }
