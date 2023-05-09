@@ -26,12 +26,16 @@ public class GravitySwitcher : MonoBehaviour
     private Vector3[] directions;
     private Quaternion[] rotations;
     // Start is called before the first frame update
+
+
+
     void Start()
     {
         InputActionMap actionMap = GetComponent<PlayerInput>().actions.FindActionMap("Player");
         ShiftGravLeft = actionMap.FindAction("ShiftGravLeft");
 
-        ShiftGravLeft.performed += RotateLeft;
+        //ShiftGravLeft.performed += ShiftGrav;
+        //ShiftGravLeft.canceled += ShiftGrav;
 
 
         CurrentRotation = Quaternion.Euler(0, 0, 0);
@@ -41,7 +45,15 @@ public class GravitySwitcher : MonoBehaviour
     }
 
 
-    void RotateLeft(InputAction.CallbackContext context)
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Q))
+        {
+            ShiftGrav();
+        }
+    }
+
+    void ShiftGrav() //ShiftGrav(InputAction.CallbackContext context)
     {
 
         int bestDirectionIndex = 0;
@@ -59,37 +71,5 @@ public class GravitySwitcher : MonoBehaviour
         }
         CurrentRotation = rotations[bestDirectionIndex];
     }
-
-    /*
-    void RotateLeft(InputAction.CallbackContext context)
-    {
-        
-        Vector3[] directions = { Vector3.right, -Vector3.right, Vector3.forward, -Vector3.forward, Vector3.up, -Vector3.up };
-
-        int bestDirectionIndex = 0;
-        float maxDot = float.MinValue;
-
-        for (int i = 0; i < directions.Length; i++)
-        {
-            float dot = Vector3.Dot(playerOrientation.forward, directions[i]);
-
-            if (dot > maxDot)
-            {
-                maxDot = dot;
-                bestDirectionIndex = i;
-            }
-        }
-        Debug.Log(bestDirectionIndex);
-
-        Vector3 Eulers = CurrentRotation.ToEulerAngles();
-
-        Quaternion[] rotations = { rotate90NegX, rotate90PosX, rotate90NegZ, rotate90PosZ, 
-            Eulers.z == 80 || Eulers.z == 270 ? rotate90NegX : rotate90NegZ,
-            Eulers.z == 0 || Eulers.z == 180 ? rotate90PosZ : rotate90NegX};
-
-        CurrentRotation *= rotations[bestDirectionIndex];
-        CurrentRotation = Quaternion.Normalize(CurrentRotation);
-    }
-    */
 
 }

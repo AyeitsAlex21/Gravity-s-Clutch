@@ -39,8 +39,12 @@ public class PlayerController : MonoBehaviour
         rbMass = rb.mass;
 
         InputActionMap actionMap = GetComponent<PlayerInput>().actions.FindActionMap("Player");
-
         jumpAction = actionMap.FindAction("Jump");
+
+        InputBinding binding = jumpAction.bindings[0];
+        string path = binding.path;
+
+        Debug.Log(path);
 
         gravSwitcher = GetComponent<GravitySwitcher>();
         currentOrientation = gravSwitcher.CurrentRotation;
@@ -49,12 +53,15 @@ public class PlayerController : MonoBehaviour
     // Update is called once per frame
     void Update() // update each and every single frame
     {
-        Debug.Log("Update");
-        if (jumpAction.WasPressedThisFrame() && isGrounded)
+        //Debug.Log("Update");
+        if (Input.GetKeyDown(KeyCode.Space)  && isGrounded) // jumpAction.WasPressedThisFrame()
         {
             Debug.Log("in jump");
             jumpTriggered = true;
         }
+
+        movementX = Input.GetAxis("Horizontal");
+        movementZ = Input.GetAxis("Vertical");
     }
 
     void FixedUpdate() // called before preforming any physics calculations
@@ -95,14 +102,17 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    private void OnMove(InputValue movementValue) // movementValue is a vec2 for x, y movement
+    /*
+    void OnMove(InputValue movementValue) // movementValue is a vec2 for x, y movement
     {
+        Debug.Log("OnMove");
         Vector2 movementVector = movementValue.Get<Vector2>();
         movementX = movementVector.x;
         movementZ = movementVector.y;
 
         //Debug.Log(movementX + " " + movementZ);
     }
+    */
 
     private void SpeedControl()
     {

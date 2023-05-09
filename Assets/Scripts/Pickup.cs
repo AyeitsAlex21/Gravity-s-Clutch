@@ -18,8 +18,39 @@ public class Pickup : MonoBehaviour
     {
         InputActionMap actionMap = GetComponent<PlayerInput>().actions.FindActionMap("Player");
         pickupAction = actionMap.FindAction("PickUp");
-        pickupAction.performed += OnPickup;
+        //pickupAction.performed += PickupRN;
+        //pickupAction.canceled += PickupRN;
         heldObject = null;
+    }
+
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.E))
+        {
+            if (heldObject == null)
+            {
+                if (Physics.Raycast(orientation.position, orientation.forward, out RaycastHit hit, 2f, pickupLayer))
+                {
+                    heldObject = hit.collider.gameObject;
+                    heldObject.transform.SetParent(holdPosition);
+                    heldObject.transform.localPosition = Vector3.zero;
+                    Rigidbody objectRb = heldObject.GetComponent<Rigidbody>();
+
+                    ApplyGravity gravity = heldObject.GetComponent<ApplyGravity>();
+                    gravity.TurnGravityOff();
+                }
+            }
+            else
+            {
+                heldObject.transform.SetParent(null);
+                Rigidbody objectRb = heldObject.GetComponent<Rigidbody>();
+
+                ApplyGravity gravity = heldObject.GetComponent<ApplyGravity>();
+                gravity.TurnGravityOn();
+
+                heldObject = null;
+            }
+        }
     }
 
     void FixedUpdate()
@@ -52,7 +83,7 @@ public class Pickup : MonoBehaviour
         }
     }
 
-    void OnPickup(InputAction.CallbackContext context)
+    void PickupRN(InputAction.CallbackContext context)
     {
 
         if (heldObject == null)
