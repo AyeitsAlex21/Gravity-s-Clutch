@@ -8,6 +8,7 @@ public class GravitySwitcher : MonoBehaviour
     public Transform playerOrientation;
     public Quaternion CurrentRotation; // THE VARIABLE WE CARE ABOUT AND SHARE ACROSS TO ROTATE EVERYTHING
 
+    private Quaternion RotateTo;
     private InputAction ShiftGravLeft;
 
 
@@ -25,6 +26,9 @@ public class GravitySwitcher : MonoBehaviour
 
     private Vector3[] directions;
     private Quaternion[] rotations;
+
+    float currentTime;
+    public float MaxRotationTime;
     // Start is called before the first frame update
 
 
@@ -33,12 +37,14 @@ public class GravitySwitcher : MonoBehaviour
     {
         InputActionMap actionMap = GetComponent<PlayerInput>().actions.FindActionMap("Player");
         ShiftGravLeft = actionMap.FindAction("ShiftGravLeft");
+        currentTime = 0;
 
         //ShiftGravLeft.performed += ShiftGrav;
         //ShiftGravLeft.canceled += ShiftGrav;
 
 
         CurrentRotation = Quaternion.Euler(0, 0, 0);
+        RotateTo = Quaternion.Euler(0, 0, 0);
 
         directions = new Vector3[] { Vector3.right, -Vector3.right, Vector3.forward, -Vector3.forward, Vector3.up, -Vector3.up };
         rotations = new Quaternion[] { rightGrav, leftGrav, forwardGrav, backwardGrav, ceilingGrav, floorGrav };
@@ -47,6 +53,14 @@ public class GravitySwitcher : MonoBehaviour
 
     private void Update()
     {
+        if (currentTime < MaxRotationTime)
+        {
+            currentTime += Time.deltaTime;
+            CurrentRotation = Quaternion.Lerp(CurrentRotation, RotateTo, currentTime);
+        }
+        else if (currentTime > MaxRotationTime)
+            CurrentRotation = RotateTo;
+
         if (Input.GetKeyDown(KeyCode.Q))
         {
             ShiftGrav();
@@ -69,7 +83,8 @@ public class GravitySwitcher : MonoBehaviour
                 bestDirectionIndex = i;
             }
         }
-        CurrentRotation = rotations[bestDirectionIndex];
+        RotateTo = rotations[bestDirectionIndex];
+        currentTime = 0;
     }
 
 }

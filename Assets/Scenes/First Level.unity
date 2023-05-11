@@ -939,6 +939,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 3015492018105037478, guid: 8af1e282081d91c4ebefcd562bfa8500,
+        type: 3}
+      propertyPath: MaxRotationTime
+      value: 1.5
+      objectReference: {fileID: 0}
     - target: {fileID: 3752946523801288788, guid: 8af1e282081d91c4ebefcd562bfa8500,
         type: 3}
       propertyPath: m_Name
