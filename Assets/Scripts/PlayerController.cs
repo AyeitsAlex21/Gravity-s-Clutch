@@ -44,7 +44,7 @@ public class PlayerController : MonoBehaviour
         InputBinding binding = jumpAction.bindings[0];
         string path = binding.path;
 
-        Debug.Log(path);
+        //Debug.Log(path);
 
         gravSwitcher = GetComponent<GravitySwitcher>();
         currentOrientation = gravSwitcher.CurrentRotation;
@@ -56,7 +56,7 @@ public class PlayerController : MonoBehaviour
         //Debug.Log("Update");
         if (Input.GetKeyDown(KeyCode.Space)  && isGrounded) // jumpAction.WasPressedThisFrame()
         {
-            Debug.Log("in jump");
+            //Debug.Log("in jump");
             jumpTriggered = true;
         }
 
@@ -96,8 +96,11 @@ public class PlayerController : MonoBehaviour
         if (jumpTriggered)
         {
 
-            rb.velocity = currentOrientation * new Vector3(rb.velocity.x, 0, rb.velocity.z);
+            //rb.velocity = currentOrientation * new Vector3(rb.velocity.x, 0, rb.velocity.z);
             rb.AddForce(currentOrientation * new Vector3(0, jumpForce, 0), ForceMode.Impulse);
+
+            Debug.Log("VEL" + " " + rb.velocity);
+
             jumpTriggered = !jumpTriggered;
         }
     }
