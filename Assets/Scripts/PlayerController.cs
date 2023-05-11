@@ -25,6 +25,7 @@ public class PlayerController : MonoBehaviour
     private bool jumpTriggered = false;
     private bool isGrounded;
     private Vector3 Gravity = new Vector3(0, -9.81f, 0);
+    Vector3 playersFeet;
 
     // Start is called before the first frame update
     void Start()
@@ -33,7 +34,7 @@ public class PlayerController : MonoBehaviour
         rb = GetComponent<Rigidbody>();
         orienation = transform.Find("Orientation").transform;
 
-        playerStandingHeight = transform.localScale.y;
+        playerStandingHeight = transform.localScale.y * 2;
         playerCrouchHeight = playerStandingHeight / 2;
         playerCurrentHeight = playerStandingHeight;
         rbMass = rb.mass;
@@ -70,7 +71,10 @@ public class PlayerController : MonoBehaviour
         rb.AddForce(currentOrientation * (Gravity * rbMass), ForceMode.Force);
         transform.rotation = currentOrientation;
 
-        isGrounded = Physics.CheckSphere(transform.position, -playerCurrentHeight * 1.1f, groundLayer);
+        playersFeet = transform.position;
+        playersFeet += (currentOrientation * Vector3.up) * -playerCrouchHeight;
+        isGrounded = Physics.CheckSphere(playersFeet, 0.1f, groundLayer);
+        
         // Calculate local input vector
         Vector3 localInput = new Vector3(movementX, 0, movementZ);
 
@@ -98,8 +102,6 @@ public class PlayerController : MonoBehaviour
 
             //rb.velocity = currentOrientation * new Vector3(rb.velocity.x, 0, rb.velocity.z);
             rb.AddForce(currentOrientation * new Vector3(0, jumpForce, 0), ForceMode.Impulse);
-
-            Debug.Log("VEL" + " " + rb.velocity);
 
             jumpTriggered = !jumpTriggered;
         }

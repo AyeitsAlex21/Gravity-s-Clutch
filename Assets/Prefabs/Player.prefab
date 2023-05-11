@@ -134,6 +134,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerOrientation: {fileID: 5337703995198036440}
   CurrentRotation: {x: 0, y: 0, z: 0, w: 0}
+  MaxRotationTime: 0
 --- !u!114 &4885333329854020477
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -261,7 +262,7 @@ CapsuleCollider:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4363844506294120080}
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 13400000, guid: fe9069961cfaa41458ffaa2af41f085a, type: 2}
   m_IsTrigger: 0
   m_Enabled: 1
   m_Radius: 0.5

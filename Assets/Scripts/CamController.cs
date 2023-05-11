@@ -30,7 +30,7 @@ public class CamController : MonoBehaviour
 
     private void OnLookPerformed(InputAction.CallbackContext context)
     {
-        Debug.Log("OnLookPerformed");
+        //Debug.Log("OnLookPerformed");
 
         currentOrientation = orientation.parent.GetComponent<GravitySwitcher>().CurrentRotation;
 
