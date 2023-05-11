@@ -113,13 +113,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: edb7b4cc662bb9141bfb984b17b1e2c7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 7
+  speed: 9
   jumpForce: 5
-  drag: 4
+  drag: 7
   airMultiplier: 0.4
   groundLayer:
     serializedVersion: 2
-    m_Bits: 256
+    m_Bits: 768
 --- !u!114 &3015492018105037478
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -134,7 +134,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerOrientation: {fileID: 5337703995198036440}
   CurrentRotation: {x: 0, y: 0, z: 0, w: 0}
-  MaxRotationTime: 0
+  MaxRotationTime: 2
 --- !u!114 &4885333329854020477
 MonoBehaviour:
   m_ObjectHideFlags: 0
