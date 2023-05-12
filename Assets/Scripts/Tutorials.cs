@@ -12,6 +12,7 @@ public class Tutorials : MonoBehaviour
     private int playerLayerIndex;
     private Color color;
 
+
     // Start is called before the first frame update
     void Start()
     {
@@ -19,6 +20,7 @@ public class Tutorials : MonoBehaviour
         playerLayerIndex = LayerMask.NameToLayer("Tutorial");
         TutorialText.text = "";
         color = TutorialText.color;
+
     }
 
     void Tutorial_setter()

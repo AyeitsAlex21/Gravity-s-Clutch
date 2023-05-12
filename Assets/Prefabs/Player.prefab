@@ -113,7 +113,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: edb7b4cc662bb9141bfb984b17b1e2c7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 9
+  walkSpeed: 0
+  sprintSpeed: 0
   jumpForce: 5
   drag: 7
   airMultiplier: 0.4
@@ -147,6 +148,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ee6256bb7682db644a49c514729ce674, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Playerobj: {fileID: 5777809954366904165}
   pickupLayer:
     serializedVersion: 2
     m_Bits: 512

@@ -102,6 +102,7 @@ public class PlayerController : MonoBehaviour
 
         if (isGrounded)
         {
+            Debug.Log(rb.velocity);
             rb.drag = drag;
             rb.AddForce(moveDirection * (speed * 10));
         }

@@ -5,6 +5,7 @@ using UnityEngine.InputSystem;
 
 public class Pickup : MonoBehaviour
 {
+    public Collider Playerobj;
     public LayerMask pickupLayer;
     public Transform holdPosition;
     public Transform orientation;
@@ -12,7 +13,10 @@ public class Pickup : MonoBehaviour
 
     private GameObject heldObject;
     private InputAction pickupAction;
-
+    private Rigidbody objectRb;
+    private Collider objectCollider;
+    private int playerLayerIndex;
+    private int pickupLayerIndex;
 
     void Start()
     {
@@ -20,7 +24,12 @@ public class Pickup : MonoBehaviour
         pickupAction = actionMap.FindAction("PickUp");
         //pickupAction.performed += PickupRN;
         //pickupAction.canceled += PickupRN;
+        playerLayerIndex = LayerMask.NameToLayer("Player");
+        pickupLayerIndex = LayerMask.NameToLayer("Pickup");
+
         heldObject = null;
+        objectCollider = null;
+        objectRb = null;
     }
 
     private void Update()
@@ -34,7 +43,13 @@ public class Pickup : MonoBehaviour
                     heldObject = hit.collider.gameObject;
                     heldObject.transform.SetParent(holdPosition);
                     heldObject.transform.localPosition = Vector3.zero;
-                    Rigidbody objectRb = heldObject.GetComponent<Rigidbody>();
+                    objectRb = heldObject.GetComponent<Rigidbody>();
+                    //objectRb.isKinematic = true;
+
+                    objectCollider = heldObject.GetComponent<Collider>();
+                    Physics.IgnoreCollision(Playerobj, objectCollider, true);
+
+                    heldObject.layer = playerLayerIndex;
 
                     ApplyGravity gravity = heldObject.GetComponent<ApplyGravity>();
                     gravity.TurnGravityOff();
@@ -43,12 +58,20 @@ public class Pickup : MonoBehaviour
             else
             {
                 heldObject.transform.SetParent(null);
-                Rigidbody objectRb = heldObject.GetComponent<Rigidbody>();
 
+                Physics.IgnoreCollision(Playerobj, objectCollider, false);
+
+                //objectRb.isKinematic = false;
                 ApplyGravity gravity = heldObject.GetComponent<ApplyGravity>();
                 gravity.TurnGravityOn();
 
+                objectRb.velocity = GetComponent<Rigidbody>().velocity;
+
+                heldObject.layer = pickupLayerIndex;
+
+                objectCollider = null;
                 heldObject = null;
+                objectRb = null;
             }
         }
     }
@@ -64,18 +87,17 @@ public class Pickup : MonoBehaviour
             return;
         }
 
-        Rigidbody heldObjectRigidbody = heldObject.GetComponent<Rigidbody>();
-        heldObjectRigidbody.velocity = Vector3.zero;
+        objectRb.velocity = Vector3.zero;
 
         Vector3 playerPosition = transform.position;
         Vector3 targetPosition = holdPosition.position;
         Vector3 direction = targetPosition - playerPosition;
 
-        float holdDistance = Vector3.Distance(playerPosition, targetPosition);
+        float holdDistance = Vector3.Distance(playerPosition, targetPosition) + (heldObject.transform.localScale.y / 2f);
 
         if (Physics.Raycast(playerPosition, direction, out RaycastHit hitInfo, holdDistance, ~ignoreLayers))
         {
-            heldObject.transform.position = hitInfo.point;
+            heldObject.transform.position = hitInfo.point - (direction.normalized * (heldObject.transform.localScale.y / 2f));
         }
         else
         {
