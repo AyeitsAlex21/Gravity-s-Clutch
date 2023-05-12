@@ -62,12 +62,10 @@ public class PlayerController : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.LeftShift))
         {
             speed = sprintSpeed;
-            Debug.Log("DOWN");
         }
         else if(Input.GetKeyUp(KeyCode.LeftShift))
         {
             speed = walkSpeed;
-            Debug.Log("UP");
         }    
 
         //Debug.Log("Update");
