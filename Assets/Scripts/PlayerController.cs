@@ -5,12 +5,14 @@ using UnityEngine.InputSystem;
 
 public class PlayerController : MonoBehaviour
 {
-    public float speed;
+    public float walkSpeed;
+    public float sprintSpeed;
     public float jumpForce;
     public float drag;
     public float airMultiplier;
     public LayerMask groundLayer;
 
+    private float speed;
     private GravitySwitcher gravSwitcher;
     private Quaternion currentOrientation;
     private Rigidbody rb;
@@ -30,6 +32,8 @@ public class PlayerController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        speed = walkSpeed;
+
         isGrounded = true;
         rb = GetComponent<Rigidbody>();
         orienation = transform.Find("Orientation").transform;
@@ -54,8 +58,20 @@ public class PlayerController : MonoBehaviour
     // Update is called once per frame
     void Update() // update each and every single frame
     {
+
+        if (Input.GetKeyDown(KeyCode.LeftShift))
+        {
+            speed = sprintSpeed;
+            Debug.Log("DOWN");
+        }
+        else if(Input.GetKeyUp(KeyCode.LeftShift))
+        {
+            speed = walkSpeed;
+            Debug.Log("UP");
+        }    
+
         //Debug.Log("Update");
-        if (Input.GetKeyDown(KeyCode.Space)  && isGrounded) // jumpAction.WasPressedThisFrame()
+        if (Input.GetKeyDown(KeyCode.Space) && isGrounded) // jumpAction.WasPressedThisFrame()
         {
             //Debug.Log("in jump");
             jumpTriggered = true;
@@ -84,6 +100,7 @@ public class PlayerController : MonoBehaviour
 
         // Calculate move direction based on local input and local forward/right directions
         Vector3 moveDirection = localForward * localInput.z + localRight * localInput.x;
+
 
         if (isGrounded)
         {
