@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using UnityEngine.SceneManagement;
 public class LevelEnding : MonoBehaviour
 {
     public float fadeDuration = 1f;
@@ -12,10 +12,12 @@ public class LevelEnding : MonoBehaviour
     {
         if (other.gameObject == Cube)
         {
-            m_IsCubeAtExit = true;
+            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+            //m_IsCubeAtExit = true;
         }
     }
 
+    /*
     void Update()
     {
         if (m_IsCubeAtExit)
@@ -27,5 +29,5 @@ public class LevelEnding : MonoBehaviour
     {
             Application.Quit();
        
-    }
+    }*/
 }
