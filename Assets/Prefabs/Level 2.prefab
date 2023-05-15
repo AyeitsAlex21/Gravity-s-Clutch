@@ -1551,6 +1551,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Level 2
       objectReference: {fileID: 0}
+    - target: {fileID: 2009607220130898616, guid: 41eaa748acffdb645b5bf0a764888b8d,
+        type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: b601c441bd965f44895e2c13e4288d67, type: 2}
     - target: {fileID: 2455281208619919964, guid: 41eaa748acffdb645b5bf0a764888b8d,
         type: 3}
       propertyPath: m_StaticEditorFlags
@@ -1567,11 +1572,21 @@ PrefabInstance:
       propertyPath: m_StaticEditorFlags
       value: 2147483647
       objectReference: {fileID: 0}
+    - target: {fileID: 4957322239356022849, guid: 41eaa748acffdb645b5bf0a764888b8d,
+        type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: b601c441bd965f44895e2c13e4288d67, type: 2}
     - target: {fileID: 5358896559319508661, guid: 41eaa748acffdb645b5bf0a764888b8d,
         type: 3}
       propertyPath: m_StaticEditorFlags
       value: 2147483647
       objectReference: {fileID: 0}
+    - target: {fileID: 5669278579560504553, guid: 41eaa748acffdb645b5bf0a764888b8d,
+        type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: b601c441bd965f44895e2c13e4288d67, type: 2}
     - target: {fileID: 6167507334203730463, guid: 41eaa748acffdb645b5bf0a764888b8d,
         type: 3}
       propertyPath: m_Material
@@ -1584,6 +1599,11 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 13400000, guid: fe9069961cfaa41458ffaa2af41f085a,
         type: 2}
+    - target: {fileID: 6615371271293359735, guid: 41eaa748acffdb645b5bf0a764888b8d,
+        type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: b601c441bd965f44895e2c13e4288d67, type: 2}
     - target: {fileID: 7178943886371088881, guid: 41eaa748acffdb645b5bf0a764888b8d,
         type: 3}
       propertyPath: m_Material
