@@ -288,7 +288,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Player: {fileID: 782211539}
-  AffectedByGravSwitch: 0
+  AffectedByGravSwitch: 1
 --- !u!65 &150810126
 BoxCollider:
   m_ObjectHideFlags: 0
