@@ -37,6 +37,10 @@ public class Tutorials : MonoBehaviour
         {
             TutorialText.text = "Press \"E\" to pickup and drop objects";
         }
+        else if (tutorial_num == 3)
+        {
+            TutorialText.text = "Find the other circuit block and place them next to eachother\n";
+        }
 
         TutorialText.canvasRenderer.SetAlpha(1);
         TutorialText.CrossFadeAlpha(0f, timeTextOnScreen, true);
