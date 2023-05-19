@@ -117,7 +117,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   walkSpeed: 7
   sprintSpeed: 14
-  jumpForce: 5
+  jumpForce: 10
   drag: 7
   airMultiplier: 0.4
   groundLayer:
