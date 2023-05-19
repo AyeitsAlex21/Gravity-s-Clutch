@@ -42,8 +42,10 @@ GameObject:
   - component: {fileID: 8058933666046324575}
   - component: {fileID: 1858140579}
   - component: {fileID: 1858140580}
+  - component: {fileID: 3089200330734525205}
   - component: {fileID: 3015492018105037478}
   - component: {fileID: 4885333329854020477}
+  - component: {fileID: 8608579697224459941}
   - component: {fileID: 1858140581}
   m_Layer: 10
   m_Name: Player
@@ -121,6 +123,20 @@ MonoBehaviour:
   groundLayer:
     serializedVersion: 2
     m_Bits: 768
+--- !u!114 &3089200330734525205
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3752946523801288788}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 46c29f4b9a07a9c45b1c3ca993c9ad53, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Player: {fileID: 3752946523801288788}
+  AffectedByGravSwitch: 1
 --- !u!114 &3015492018105037478
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -135,7 +151,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerOrientation: {fileID: 5337703995198036440}
   CurrentRotation: {x: 0, y: 0, z: 0, w: 0}
-  MaxRotationTime: 2
+  RotateTo: {x: 0, y: 0, z: 0, w: 0}
+  MaxRotationTime: 4
 --- !u!114 &4885333329854020477
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -157,6 +174,19 @@ MonoBehaviour:
   ignoreLayers:
     serializedVersion: 2
     m_Bits: 1536
+--- !u!114 &8608579697224459941
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3752946523801288788}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 435ee8cf0dd4a3e4696726345f327906, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  orientationText: {fileID: 0}
 --- !u!54 &1858140581
 Rigidbody:
   m_ObjectHideFlags: 0

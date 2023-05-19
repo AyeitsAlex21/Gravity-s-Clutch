@@ -8,7 +8,7 @@ public class GravitySwitcher : MonoBehaviour
     public Transform playerOrientation;
     public Quaternion CurrentRotation; // THE VARIABLE WE CARE ABOUT AND SHARE ACROSS TO ROTATE EVERYTHING
 
-    private Quaternion RotateTo;
+    public Quaternion RotateTo;
     private InputAction ShiftGravLeft;
 
 
@@ -56,7 +56,7 @@ public class GravitySwitcher : MonoBehaviour
         if (currentTime < MaxRotationTime)
         {
             currentTime += Time.deltaTime;
-            CurrentRotation = Quaternion.Lerp(CurrentRotation, RotateTo, currentTime);
+            CurrentRotation = Quaternion.Lerp(CurrentRotation, RotateTo, currentTime / MaxRotationTime);
         }
         else if (currentTime > MaxRotationTime)
             CurrentRotation = RotateTo;

@@ -82,7 +82,6 @@ public class PlayerController : MonoBehaviour
     void FixedUpdate() // called before preforming any physics calculations
     {
         currentOrientation = gravSwitcher.CurrentRotation;
-        rb.AddForce(currentOrientation * (Gravity * rbMass), ForceMode.Force);
         transform.rotation = currentOrientation;
 
         playersFeet = transform.position;
@@ -102,7 +101,6 @@ public class PlayerController : MonoBehaviour
 
         if (isGrounded)
         {
-            Debug.Log(rb.velocity);
             rb.drag = drag;
             rb.AddForce(moveDirection * (speed * 10));
         }

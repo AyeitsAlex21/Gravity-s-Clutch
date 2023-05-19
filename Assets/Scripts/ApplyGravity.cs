@@ -7,7 +7,7 @@ public class ApplyGravity : MonoBehaviour
     public GameObject Player;
     public bool AffectedByGravSwitch;
 
-    private Vector3 Gravity = new Vector3(0, -9.81f, 0);
+    private Vector3 Gravity = new Vector3(0, -9.81f * 1.5f, 0);
     private Quaternion CurrentRotation;
     private Rigidbody rb;
     private GravitySwitcher gravitySwitcher; 

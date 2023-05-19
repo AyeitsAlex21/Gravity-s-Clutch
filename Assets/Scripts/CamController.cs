@@ -12,6 +12,7 @@ public class CamController : MonoBehaviour
     private float yRot = 0;
     private InputAction lookAction;
     private Quaternion currentOrientation;
+    private InputAction mouseMoveAction;
 
 
     // Start is called before the first frame update
@@ -20,21 +21,28 @@ public class CamController : MonoBehaviour
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
 
+        /*
         InputActionMap actionMap = GetComponent<PlayerInput>().actions.FindActionMap("Player");
         lookAction = actionMap.FindAction("Look");
         lookAction.performed += OnLookPerformed; // this will call on player moves mouse // has to be named preformed for some reasona
-        lookAction.canceled += OnLookPerformed;
+        lookAction.Enable();
+        */
 
+        mouseMoveAction = new InputAction(type: InputActionType.Value, binding: "<Mouse>/delta");
+        mouseMoveAction.performed += ctx => OnLookPerformed(ctx.ReadValue<Vector2>());
+        mouseMoveAction.Enable();
+    
         currentOrientation = orientation.parent.GetComponent<GravitySwitcher>().CurrentRotation;
     }
 
-    private void OnLookPerformed(InputAction.CallbackContext context)
+
+    void OnLookPerformed(Vector2 delta)
     {
-        //Debug.Log("OnLookPerformed");
+        Debug.Log("OnLookPerformed");
 
         currentOrientation = orientation.parent.GetComponent<GravitySwitcher>().CurrentRotation;
 
-        Vector2 movementVector = context.ReadValue<Vector2>();
+        Vector2 movementVector = delta;
         yRot += movementVector.x * sensX;
         xRot -= movementVector.y * sensY;
 
