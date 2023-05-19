@@ -29,6 +29,7 @@ public class GravitySwitcher : MonoBehaviour
 
     float currentTime;
     public float MaxRotationTime;
+
     // Start is called before the first frame update
 
 

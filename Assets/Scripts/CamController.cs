@@ -8,6 +8,7 @@ public class CamController : MonoBehaviour
     public float sensX, sensY;
     public Transform orientation;
 
+    private bool ifGravSwitch;
     private float xRot = 0;
     private float yRot = 0;
     private InputAction lookAction;
@@ -27,6 +28,7 @@ public class CamController : MonoBehaviour
         lookAction.performed += OnLookPerformed; // this will call on player moves mouse // has to be named preformed for some reasona
         lookAction.Enable();
         */
+        ifGravSwitch = orientation.parent.GetComponent<ApplyGravity>().AffectedByGravSwitch;
 
         mouseMoveAction = new InputAction(type: InputActionType.Value, binding: "<Mouse>/delta");
         mouseMoveAction.performed += ctx => OnLookPerformed(ctx.ReadValue<Vector2>());
@@ -38,7 +40,7 @@ public class CamController : MonoBehaviour
 
     void OnLookPerformed(Vector2 delta)
     {
-        Debug.Log("OnLookPerformed");
+        //Debug.Log("OnLookPerformed");
 
         currentOrientation = orientation.parent.GetComponent<GravitySwitcher>().CurrentRotation;
 
@@ -48,8 +50,13 @@ public class CamController : MonoBehaviour
 
         xRot = Mathf.Clamp(xRot, -89f, 89f); // stops camera from going all the way around if look up or down
 
-        transform.rotation = currentOrientation * Quaternion.Euler(xRot, yRot, 0);
-        orientation.rotation = currentOrientation * Quaternion.Euler(xRot, yRot, 0);
+        Quaternion rotation = Quaternion.Euler(xRot, yRot, 0);
+
+        if (ifGravSwitch)
+            rotation = currentOrientation * rotation;
+
+        transform.rotation = rotation;
+        orientation.rotation = rotation;
 
 
     }

@@ -14,6 +14,7 @@ public class PlayerController : MonoBehaviour
 
     private float speed;
     private GravitySwitcher gravSwitcher;
+    private bool applyGravity;
     private Quaternion currentOrientation;
     private Rigidbody rb;
     private Transform orienation;
@@ -37,6 +38,8 @@ public class PlayerController : MonoBehaviour
         isGrounded = true;
         rb = GetComponent<Rigidbody>();
         orienation = transform.Find("Orientation").transform;
+
+        applyGravity = GetComponent<ApplyGravity>().AffectedByGravSwitch;
 
         playerStandingHeight = transform.localScale.y * 2;
         playerCrouchHeight = playerStandingHeight / 2;
@@ -81,7 +84,8 @@ public class PlayerController : MonoBehaviour
 
     void FixedUpdate() // called before preforming any physics calculations
     {
-        currentOrientation = gravSwitcher.CurrentRotation;
+        currentOrientation = applyGravity ? gravSwitcher.CurrentRotation : Quaternion.Euler(0, 0, 0);
+
         transform.rotation = currentOrientation;
 
         playersFeet = transform.position;
