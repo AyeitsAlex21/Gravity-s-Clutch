@@ -12,7 +12,7 @@ public class LevelEnding : MonoBehaviour
     {
         if (other.gameObject == Cube)
         {
-            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 2);
             //m_IsCubeAtExit = true;
         }
     }
