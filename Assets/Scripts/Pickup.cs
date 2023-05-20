@@ -11,10 +11,11 @@ public class Pickup : MonoBehaviour
     public Transform orientation;
     public LayerMask ignoreLayers;
 
-    private GameObject heldObject;
+    private Transform oldParent;
+    public GameObject heldObject;
     private InputAction pickupAction;
-    private Rigidbody objectRb;
-    private Collider objectCollider;
+    public Rigidbody objectRb;
+    public Collider objectCollider;
     private int playerLayerIndex;
     private int pickupLayerIndex;
 
@@ -30,6 +31,8 @@ public class Pickup : MonoBehaviour
         heldObject = null;
         objectCollider = null;
         objectRb = null;
+
+        oldParent = null;
     }
 
     private void Update()
@@ -41,6 +44,7 @@ public class Pickup : MonoBehaviour
                 if (Physics.Raycast(orientation.position, orientation.forward, out RaycastHit hit, 2f, pickupLayer))
                 {
                     heldObject = hit.collider.gameObject;
+                    oldParent = heldObject.transform.parent;
                     heldObject.transform.SetParent(holdPosition);
                     heldObject.transform.localPosition = Vector3.zero;
                     objectRb = heldObject.GetComponent<Rigidbody>();
@@ -57,7 +61,7 @@ public class Pickup : MonoBehaviour
             }
             else
             {
-                heldObject.transform.SetParent(null);
+                heldObject.transform.SetParent(oldParent);
 
                 Physics.IgnoreCollision(Playerobj, objectCollider, false);
 

@@ -3,7 +3,11 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 2
-  tags: []
+  tags:
+  - Bat2
+  - Bat1
+  - batteryTut
+  - GravSwitch
   layers:
   - Default
   - TransparentFX
@@ -19,8 +23,8 @@ TagManager:
   - 
   - 
   - Tutorial
-  - 
-  - 
+  - BatteryHitbox
+  - Battery
   - 
   - 
   - 

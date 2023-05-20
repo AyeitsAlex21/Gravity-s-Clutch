@@ -173,7 +173,7 @@ MonoBehaviour:
   orientation: {fileID: 5337703995198036440}
   ignoreLayers:
     serializedVersion: 2
-    m_Bits: 1536
+    m_Bits: 17920
 --- !u!114 &8608579697224459941
 MonoBehaviour:
   m_ObjectHideFlags: 0
