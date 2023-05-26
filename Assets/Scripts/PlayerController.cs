@@ -11,6 +11,7 @@ public class PlayerController : MonoBehaviour
     public float drag;
     public float airMultiplier;
     public LayerMask groundLayer;
+    public LayerMask IceLayer;
 
     private float speed;
     private GravitySwitcher gravSwitcher;
@@ -27,6 +28,7 @@ public class PlayerController : MonoBehaviour
     private float playerCurrentHeight;
     private bool jumpTriggered = false;
     private bool isGrounded;
+    private bool isIce;
     private Vector3 Gravity = new Vector3(0, -9.81f, 0);
     Vector3 playersFeet;
 
@@ -34,7 +36,7 @@ public class PlayerController : MonoBehaviour
     void Start()
     {
         speed = walkSpeed;
-
+        isIce = true;
         isGrounded = true;
         rb = GetComponent<Rigidbody>();
         orienation = transform.Find("Orientation").transform;
@@ -91,6 +93,7 @@ public class PlayerController : MonoBehaviour
         playersFeet = transform.position;
         playersFeet += (currentOrientation * Vector3.up) * -playerCrouchHeight;
         isGrounded = Physics.CheckSphere(playersFeet, 0.1f, groundLayer);
+        isIce = Physics.CheckSphere(playersFeet, 0.1f, IceLayer);
         
         // Calculate local input vector
         Vector3 localInput = new Vector3(movementX, 0, movementZ);
@@ -102,8 +105,12 @@ public class PlayerController : MonoBehaviour
         // Calculate move direction based on local input and local forward/right directions
         Vector3 moveDirection = localForward * localInput.z + localRight * localInput.x;
 
-
-        if (isGrounded)
+        if(isIce)
+        {
+            rb.drag = 0;
+            rb.AddForce(moveDirection * (speed * 10));
+        }
+        else if (isGrounded)
         {
             rb.drag = drag;
             rb.AddForce(moveDirection * (speed * 10));
@@ -123,6 +130,7 @@ public class PlayerController : MonoBehaviour
 
             jumpTriggered = !jumpTriggered;
         }
+
     }
 
     /*
