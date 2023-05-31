@@ -18,7 +18,7 @@ public class TextPrompt : MonoBehaviour
         if (other.gameObject.tag == "Player")
         {
             Text.SetActive(true);
-            StartCoroutine("WaitForSec");
+            //StartCoroutine("WaitForSec");
         }
     }
     IEnumerator WaitForSec()
