@@ -64,14 +64,14 @@ public class PlayerController : MonoBehaviour
     void Update() // update each and every single frame
     {
 
-        if (Input.GetKeyDown(KeyCode.LeftShift))
+        if (isGrounded && Input.GetKey(KeyCode.LeftShift))
         {
             speed = sprintSpeed;
         }
-        else if(Input.GetKeyUp(KeyCode.LeftShift))
+        else if (isGrounded && ! Input.GetKey(KeyCode.LeftShift))
         {
             speed = walkSpeed;
-        }    
+        }
 
         //Debug.Log("Update");
         if (Input.GetKeyDown(KeyCode.Space) && isGrounded) // jumpAction.WasPressedThisFrame()
@@ -94,7 +94,7 @@ public class PlayerController : MonoBehaviour
         playersFeet += (currentOrientation * Vector3.up) * -playerCrouchHeight;
         isGrounded = Physics.CheckSphere(playersFeet, 0.1f, groundLayer);
         isIce = Physics.CheckSphere(playersFeet, 0.1f, IceLayer);
-        
+
         // Calculate local input vector
         Vector3 localInput = new Vector3(movementX, 0, movementZ);
 
@@ -105,22 +105,27 @@ public class PlayerController : MonoBehaviour
         // Calculate move direction based on local input and local forward/right directions
         Vector3 moveDirection = localForward * localInput.z + localRight * localInput.x;
 
-        if(isIce)
+        if (isIce)
         {
-            rb.drag = 0;
-            rb.AddForce(moveDirection * (speed * 10));
+            rb.drag = 0.5f;
+            rb.AddForce(moveDirection * (speed * 2));
+
+            IceSpeedControl();
         }
         else if (isGrounded)
         {
             rb.drag = drag;
             rb.AddForce(moveDirection * (speed * 10));
+            SpeedControl();
         }
         else
         {
             rb.drag = 0;
             rb.AddForce(moveDirection * (speed * 10 * airMultiplier));
+            SpeedControl();
         }
-        SpeedControl();
+
+
 
         if (jumpTriggered)
         {
@@ -154,6 +159,20 @@ public class PlayerController : MonoBehaviour
         {
             localFlatVelocity = localFlatVelocity.normalized * speed;
             localVelocity = new Vector3(localFlatVelocity.x, localVelocity.y, localFlatVelocity.z);
+            rb.velocity = currentOrientation * localVelocity;
+        }
+    }
+
+    private void IceSpeedControl()
+    {
+        Vector3 localVelocity = Quaternion.Inverse(currentOrientation) * rb.velocity;
+        Vector3 localFlatVelocity = new Vector3(localVelocity.x, 0, localVelocity.z);
+
+        if (localFlatVelocity.magnitude > speed)
+        {
+            localFlatVelocity = localFlatVelocity.normalized * speed;
+            localVelocity = new Vector3(localFlatVelocity.x, localVelocity.y * 0.9f, localFlatVelocity.z);
+
             rb.velocity = currentOrientation * localVelocity;
         }
     }
