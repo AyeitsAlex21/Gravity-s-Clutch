@@ -15,15 +15,18 @@ public class TextPrompt : MonoBehaviour
 
     void OnTriggerEnter (Collider other)
     {
+        Destroy(Text);
+        /*
         if (other.gameObject.tag == "Player")
         {
             Text.SetActive(true);
-            //StartCoroutine("WaitForSec");
-        }
+            StartCoroutine("WaitForSec");
+        }*/
     }
     IEnumerator WaitForSec()
     {
-        yield return new WaitForSeconds(5);
         Destroy(Text);
+        yield return new WaitForSeconds(5);
+        
     }
 }
