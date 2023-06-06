@@ -7,7 +7,7 @@ public class LevelEnding : MonoBehaviour
     public float fadeDuration = 1f;
     public GameObject Cube;
     bool m_IsCubeAtExit;
-    /*
+    
     public Animator animator;
     
     public void FadeToLevel (int levelIndex)
@@ -20,12 +20,12 @@ public class LevelEnding : MonoBehaviour
     {
         FadeToLevel(SceneManager.GetActiveScene().buildIndex + 1);
     }
-    */
+    
     void OnTriggerEnter(Collider other)
     {
         if (other.gameObject == Cube)
         {
-            //FadeToNextLevel();
+            FadeToNextLevel();
             SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
                 //m_IsCubeAtExit = true;
            
@@ -35,6 +35,7 @@ public class LevelEnding : MonoBehaviour
     /*
     void Update()
     {
+       
         if (m_IsCubeAtExit)
         {
             EndLevel();

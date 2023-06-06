@@ -1104,6 +1104,12 @@ GameObject:
     type: 3}
   m_PrefabInstance: {fileID: 331752318}
   m_PrefabAsset: {fileID: 0}
+--- !u!95 &331752320 stripped
+Animator:
+  m_CorrespondingSourceObject: {fileID: 6465031544378467247, guid: ca1d28bc045acf74198298f4ece61f9a,
+    type: 3}
+  m_PrefabInstance: {fileID: 331752318}
+  m_PrefabAsset: {fileID: 0}
 --- !u!114 &331752321
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1118,6 +1124,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   fadeDuration: 1
   Cube: {fileID: 527842568}
+  animator: {fileID: 0}
 --- !u!1 &374938554 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 2079145979744315681, guid: 27b752983ea16e54a881c764775b2b7b,
@@ -3019,6 +3026,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   fadeDuration: 0
   Cube: {fileID: 527842568}
+  animator: {fileID: 331752320}
 --- !u!65 &1942150328
 BoxCollider:
   m_ObjectHideFlags: 0
