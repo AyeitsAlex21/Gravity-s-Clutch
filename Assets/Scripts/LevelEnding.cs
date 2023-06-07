@@ -4,33 +4,42 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 public class LevelEnding : MonoBehaviour
 {
-    public float fadeDuration = 1f;
+    //public float fadeDuration = 1f;
     public GameObject Cube;
     bool m_IsCubeAtExit;
-    
-    public Animator animator;
-    
-    public void FadeToLevel (int levelIndex)
-    {
-        animator.SetTrigger("FadeOut");
-    }
-    
 
-    public void FadeToNextLevel()
-    {
-        FadeToLevel(SceneManager.GetActiveScene().buildIndex + 1);
-    }
-    
+    public Animator Transition;
+
     void OnTriggerEnter(Collider other)
     {
         if (other.gameObject == Cube)
         {
-            FadeToNextLevel();
-            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+            LoadNextLevel();
+           
                 //m_IsCubeAtExit = true;
            
         }
     }
+
+    public void LoadNextLevel()
+    {
+        StartCoroutine(LoadLevel(SceneManager.GetActiveScene().buildIndex + 1));
+
+    }
+
+    IEnumerator LoadLevel(int levelIndex)
+    {
+        Transition.SetTrigger("Start");
+
+        yield return new WaitForSeconds(1);
+        //yield return new WaitForSeconds(fadeDuration);
+
+        SceneManager.LoadScene(levelIndex);
+
+
+    }
+
+
 
     /*
     void Update()
