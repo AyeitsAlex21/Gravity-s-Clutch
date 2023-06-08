@@ -23,13 +23,14 @@ public class LevelEnding : MonoBehaviour
 
     public void LoadNextLevel()
     {
+        Transition.SetTrigger("Start");
         StartCoroutine(LoadLevel(SceneManager.GetActiveScene().buildIndex + 1));
 
     }
 
     IEnumerator LoadLevel(int levelIndex)
     {
-        Transition.SetTrigger("Start");
+       
 
         yield return new WaitForSeconds(1);
         //yield return new WaitForSeconds(fadeDuration);

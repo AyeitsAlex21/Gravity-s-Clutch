@@ -31,7 +31,7 @@ public class GravitySwitcher : MonoBehaviour
     public float MaxRotationTime;
 
     // Start is called before the first frame update
-
+    [SerializeField] private AudioSource GravSwitch;
 
 
     void Start()
@@ -77,7 +77,7 @@ public class GravitySwitcher : MonoBehaviour
         for (int i = 0; i < directions.Length; i++)
         {
             float dot = Vector3.Dot(playerOrientation.forward, directions[i]);
-
+            GravSwitch.Play();
             if (dot > maxDot)
             {
                 maxDot = dot;

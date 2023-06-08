@@ -32,6 +32,10 @@ public class PlayerController : MonoBehaviour
     private Vector3 Gravity = new Vector3(0, -9.81f, 0);
     Vector3 playersFeet;
 
+    //audio variables
+    [SerializeField] private AudioSource jumpSoundEffect;
+
+
     // Start is called before the first frame update
     void Start()
     {
@@ -132,7 +136,7 @@ public class PlayerController : MonoBehaviour
 
             //rb.velocity = currentOrientation * new Vector3(rb.velocity.x, 0, rb.velocity.z);
             rb.AddForce(currentOrientation * new Vector3(0, jumpForce, 0), ForceMode.Impulse);
-
+            jumpSoundEffect.Play();
             jumpTriggered = !jumpTriggered;
         }
 

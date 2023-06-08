@@ -10,18 +10,23 @@ public class TriggerDoorController : MonoBehaviour
     [SerializeField] private bool upTrigger = false;
     public GameObject Sphere;
 
+    [SerializeField] private AudioSource Door;
+
     private void OnTriggerEnter(Collider other)
     {
         if (other.gameObject == Sphere)
         {
             if (downTrigger)
             {
+                
                 myDoor.Play("Doordown", 0, 0.0f);
+                Door.Play();
                 gameObject.SetActive(false);
             }
             if (upTrigger)
             {
                 myDoor.Play("Doorup", 0, 0.0f);
+                Door.Play();
                 gameObject.SetActive(false);
             }
         }
