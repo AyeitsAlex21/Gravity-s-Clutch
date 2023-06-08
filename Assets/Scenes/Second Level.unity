@@ -1387,6 +1387,12 @@ PrefabInstance:
       objectReference: {fileID: 527842568}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: faf74802b056f90429c6554ca2e203db, type: 3}
+--- !u!95 &511322665 stripped
+Animator:
+  m_CorrespondingSourceObject: {fileID: 1809792698217492568, guid: faf74802b056f90429c6554ca2e203db,
+    type: 3}
+  m_PrefabInstance: {fileID: 511322664}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &527842567
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2377,7 +2383,7 @@ MonoBehaviour:
   downTrigger: 1
   upTrigger: 0
   Sphere: {fileID: 374938554}
-  Door: {fileID: 1391548927}
+  Door: {fileID: 0}
 --- !u!65 &1391548923
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -3374,7 +3380,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Cube: {fileID: 527842568}
-  Transition: {fileID: 0}
+  Transition: {fileID: 511322665}
 --- !u!65 &1942150328
 BoxCollider:
   m_ObjectHideFlags: 0
